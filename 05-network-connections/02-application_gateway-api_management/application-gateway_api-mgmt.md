@@ -8,12 +8,14 @@ Application Gateway acts as the internet-facing entry point, inspecting incoming
 
 APIM handles API routing and enforcement of API-level security policies before requests reach the backend services.
 
+---
+
 ## 2. Configuration
 
 ### Application Gateway: Set up the backend pool to API Management Service
 
 - On the Application Gateway resource, click on *Backend Pools* under *Settings*.
-- You should find the backend pool created duirng the deployment i.e. *backend-savannah-gw*. Click to open it.
+- You should find the backend pool created duirng the deployment i.e. *gw-backend-savannah*. Click to open it.
 
 ![alt text](image-1.png)
 
@@ -24,9 +26,11 @@ APIM handles API routing and enforcement of API-level security policies before r
 |-----|-----|
 | Add backend pool without targets | No |
 | Sever selection algorithm | Round Robin |
-| Backend Targets | 10.0.2.4 (My API Management IP address) |
+| Backend Targets | 10.0.2.4 (My API Management Service Private IP address) |
 
 ![alt text](image-3.png)
+
+---
 
 ## 3. Connectivity Testing
 
@@ -53,7 +57,9 @@ To confirm that the APP Gateway and API Management can communicate, navigate to 
 
 ![alt text](image-2.png)
 
-This establishes connectivity between Application Gateway and APIM.
+*This establishes connectivity between Application Gateway and APIM.*
+
+---
 
 ## 4. Evidences
 
@@ -77,9 +83,11 @@ This establishes connectivity between Application Gateway and APIM.
 
 ![alt text](image-8.png)
 
-### Externla-to-APIM Request Forwarding Validation
+### External-to-APIM Request Forwarding Validation
 
 ![alt text](image-9.png)
+
+---
 
 **Outstanding Issues / Notes:**
 

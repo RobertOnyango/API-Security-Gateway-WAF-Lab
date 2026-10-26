@@ -12,7 +12,8 @@ APIM will be responsible for enforcing controls such as:
 - API subscription and access management.
 - Request and response transformations.
 - API versioning.
-- Routing requests to the correct backend.
+- Backend routing and access control.
+
 
 ---
 
@@ -27,19 +28,6 @@ APIM will be responsible for enforcing controls such as:
 | Virtual Network Type | Internal |
 | Virtual Network | VNet-savannah-security-security-poc |
 | Subnets | subnet-apimgmt |
-
----
-
-## Security Responsibilities
-
-API Management  will be configured to enforce API-level security controls, including:
-
-- JWT token validation.
-- Request throttling and rate limiting.
-- API request and response policies.
-- Backend routing and access control.
-
-Backend applications remain responsible for application-level authorization and resource ownership validation.
 
 ---
 

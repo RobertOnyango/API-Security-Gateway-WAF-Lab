@@ -1,4 +1,4 @@
-# Azure Application Gateways
+# Azure Application Gateway
 
 ## Overview
 
@@ -26,7 +26,7 @@ It sits in front of Azure API Management (APIM), which provides the next layer o
 | IP Address Type | IPv4 Only |
 | HTTP2 | Enabled |
 | FIPS | Disabled | 
-| WAF Policy | savannah-L7-security |
+| WAF Policy | waf-policy-savannah-poc |
 | Virtual network | VNet-savannah-security-poc |
 | Subnet | subnet-wafgw (10.0.1.0/24) |
 
@@ -55,8 +55,8 @@ Click on **Add a backend pool**.
 
 | Property | Configuration |
 |----|----|
-| Name | backend-savannah-gw |
-| Targets | 0 (Will be configured after the Azure API Management is done) |
+| Name | gw-backend-savannah |
+| Targets | 0 (Azure API Management's Private IP Address) |
 
 The APIM endpoint will be added after APIM has been deployed and its network connectivity has been established.
 
@@ -70,14 +70,14 @@ A listener identifies the frontend IP, port and protocol on which the gateway re
 
 | Property | Configuration |
 |----|----|
-| Rule Name | public-api-to-apim |
-| Listener name | listener-public-api |
+| Rule Name | public-api-to-private-apim |
+| Listener name | listener-public-savannah |
 | Priority | 100 |
 | Frontend IP | Public IPv4 |
 | Protocol | 80 |
 | Listener Type | Basic |
 | Backend Type | Backend pools(s) |
-| Backend pool | backend-savannah-gw |
-| Backend settings name | savannah-api-rule |
+| Backend pool | gw-backend-savannah |
+| Backend settings name | gw-savannah-api-rule |
 
 ---

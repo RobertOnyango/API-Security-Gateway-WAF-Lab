@@ -56,7 +56,7 @@ After successful deployment, proceed to provision the **Azure Web App** via **Ap
 | Virtual Network | VNet-savannah-security-poc (rg-savannah-security-poc) |
 | Inbound Access (Enable Private Endpoints) | On |
 | Inbound Access (Private endpoint name) | patients-api-endpoint |
-| Inbound Access (Inbound Subnet) | appointments-api-endpoint |
+| Inbound Access (Inbound Subnet) | subnet-private-endpoints |
 | Inbound Access (DNS) | Azure Private DNS Zone |
 | Outbound Access (Enable VNet integration) | On
 | Outbound Access (Outbound subnet) | subnet-apis |
@@ -67,6 +67,21 @@ After successful deployment, proceed to provision the **Azure Web App** via **Ap
 **NOTE**: Use the same configurations for the appointments Web Service, only changing the following entries: 
 - Basics Tab - Name: savannah-poc-appointments-api
 - Networking Tab - Inbound Access (Private endpoint name): appointments-api-endpoint
+
+---
+
+## Private Connectivity and DNS
+
+Once the above configurations are done, both backend App Services have been configured with **Azure Private Endpoints** in subnet-private-endpoints, providing private network connectivity within VNet-savannah-security-poc.
+
+The **Private DNS zone privatelink.azurewebsites.net** has been configured and integrated with both Private Endpoints. A virtual network link to VNet-savannah-security-poc has also been created and confirmed.
+
+The following configurations have been verified:
+
+- Patient Records API Private Endpoint: 10.0.4.4 — Connection approved.
+- Appointments API Private Endpoint: 10.0.4.5 — Connection approved.
+- Private DNS integration configured for both endpoints.
+- Private DNS zone linked to the virtual network.
 
 ---
 
