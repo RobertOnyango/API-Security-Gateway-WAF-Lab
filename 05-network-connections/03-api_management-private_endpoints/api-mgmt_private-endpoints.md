@@ -34,7 +34,7 @@ Navigation *apimgmt-savannah-security-poc->APIs->Backend*
 |---|---|
 | Backend Name | backend-savannah-poc-appointments |
 | Backend Hosting Type | Azure resource |
-| Runtime URL | https://savannah-poc-appointments-api-d3gngwb9azhtgah6.westus3-01.azurewebsites.net |
+| Runtime URL | http://savannah-poc-appointments-api-d3gngwb9azhtgah6.westus3-01.azurewebsites.net |
 | Authentication | Pending |
 
 #### Patients API APP Service
@@ -43,8 +43,10 @@ Navigation *apimgmt-savannah-security-poc->APIs->Backend*
 |---|---|
 | Backend Name | backend-savannah-poc-patients |
 | Backend Hosting Type | Azure resource |
-| Runtime URL | https://savannah-poc-patients-api-gbdgejawhcaqesde.westus3-01.azurewebsites.net |
+| Runtime URL | http://savannah-poc-patients-api-gbdgejawhcaqesde.westus3-01.azurewebsites.net |
 | Authentication | Pending |
+
+![alt text](image.png)
 
 ---
 
