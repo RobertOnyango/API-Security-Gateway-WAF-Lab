@@ -39,7 +39,7 @@ After successful deployment, proceed to provision the **Azure Web App** via **Ap
 |----|----|----|
 | Name | savannah-poc-patients-api | Must be globally unique |
 | Publish | Code | Simpler for this demo |
-| Runtime Stack | Python 3.14 |
+| Runtime Stack | Python 3.13 |
 | Operating System | Linux | Matches the App Service Plan |
 | Region | West US 3 |
 | Pricing Plan | Linux Plan (West US 3) | app-plan-savannah-security-poc |

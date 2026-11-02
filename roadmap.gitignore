@@ -1,0 +1,268 @@
+# API Security Gateway & WAF Lab — Implementation Roadmap
+
+## Project objective
+Build, deploy, secure and test two Python APIs hosted on Azure App Services, expose them through Azure API Management and Application Gateway WAF, and implement automated application security testing and CI/CD.
+
+| Count | Object |
+|-----|-----|
+| 2 | Backend APIs |
+| 1 | GitHub repository |
+| 3 | Security testing disciplines |
+| 1 | Integrated Azure architecture |
+
+## Phase 1 — Development Environment and Project Foundation
+
+**Objective:** Establish the development environment and GitHub repository before implementing either API.
+
+| Activity | What We'll Do | Deliverable |
+|---|---|---|
+| 1.1 | Inspect both App Services: OS, Python runtime, configuration and pricing tier | Runtime compatibility confirmed |
+| 1.2 | Establish Python development environment in VS Code | Working Python environment |
+| 1.3 | Create the combined GitHub repository structure | Repository ready |
+| 1.4 | Configure Git, `.gitignore`, README and requirements files | Version-controlled project |
+| 1.5 | Establish development and deployment configuration | Environment separation |
+
+**Topics You'll Learn:** Python environments, Git, repository management, application configuration and environment variables.
+
+## Phase 2 — Backend API Development
+
+**Objective:** Build two simple but properly structured applications using Flask.
+
+We will implement the same architecture for both APIs.
+
+| Activity | Patient Records API | Appointments API |
+|---|---|---|
+| 2.1 | Initialize Flask application | Initialize Flask application |
+| 2.2 | Implement health endpoint | Implement health endpoint |
+| 2.3 | Implement GET endpoints | Implement GET endpoints |
+| 2.4 | Implement POST endpoints | Implement POST endpoints |
+| 2.5 | Create service layer | Create service layer |
+| 2.6 | Create repository/data-access layer | Create repository/data-access layer |
+| 2.7 | Add input validation | Add input validation |
+| 2.8 | Add error handling | Add error handling |
+| 2.9 | Write unit tests | Write unit tests |
+
+**Initial API Functionality:**
+
+- Patient Records: `/health`, `/patients`, `/patients/{id}`, `POST /patients`.
+- Appointments: `/health`, `/appointments`, `/appointments/{id}`, `POST /appointments`.
+
+We'll use synthetic JSON datasets initially, rather than introduce database infrastructure.
+
+**Topics You'll Learn:** HTTP methods, REST APIs, Flask, controllers, services, repositories, JSON, application logic, validation and unit testing.
+
+## Phase 3 — Application Security Engineering
+
+**Objective:** Implement security controls inside the applications and understand which responsibilities belong to the backend versus the gateway.
+
+| Activity | Implementation | Security Concept |
+|---|---|---|
+| 3.1 | Token validation and identity handling | Authentication |
+| 3.2 | Role and permission checks | RBAC |
+| 3.3 | Patient-specific access checks | Object-level authorization / BOLA |
+| 3.4 | Request validation and field restrictions | Injection and mass assignment prevention |
+| 3.5 | Consistent error responses | Information disclosure prevention |
+| 3.6 | Security and audit logging | Accountability and traceability |
+| 3.7 | Secret and configuration management | Credential protection |
+
+**Important:** We'll demonstrate both gateway-level JWT validation and backend authorization. APIM validating a token does not automatically authorize a doctor to access every patient record.
+
+**Topics You'll Learn:** JWTs, OAuth 2.0 concepts, Microsoft Entra ID, RBAC, BOLA, secure coding and audit trails.
+
+## Phase 4 — Azure App Service Deployment
+
+**Objective:** Deploy the actual Python applications to the two App Services we already created.
+
+This is where we move from local development to Azure hosting.
+
+| Activity | What We'll Do |
+|---|---|
+| 4.1 | Confirm both App Services use compatible operating systems and Python runtimes |
+| 4.2 | Configure the application startup command |
+| 4.3 | Configure application environment variables |
+| 4.4 | Prepare deployment packages |
+| 4.5 | Deploy Patient Records API |
+| 4.6 | Deploy Appointments API |
+| 4.7 | Configure application logs and diagnostics |
+| 4.8 | Test health endpoints and API functionality |
+
+We'll first deploy manually using an appropriate Azure deployment method, then automate deployment later.
+
+**Topics You'll Learn:** App Service hosting, runtime configuration, startup commands, deployment packages, application logs and cloud troubleshooting.
+
+## Phase 5 — HTTPS, TLS and Certificates
+
+**Explicit Project Requirement**
+
+**Objective:** Understand and implement encrypted communication across the architecture.
+
+Certificates are an important part of enterprise infrastructure security, and we'll cover this properly.
+
+| Activity | What We'll Configure or Investigate |
+|---|---|
+| 5.1 | Understand TLS, certificates, certificate chains and trust |
+| 5.2 | Verify HTTPS and TLS 1.2 on both App Services |
+| 5.3 | Understand Azure App Service managed certificates and platform certificates |
+| 5.4 | Establish a suitable hostname and certificate for the public gateway |
+| 5.5 | Configure an HTTPS listener on Application Gateway |
+| 5.6 | Configure certificate association, potentially using Azure Key Vault |
+| 5.7 | Configure HTTPS communication between gateway components where appropriate |
+| 5.8 | Verify backend HTTPS connectivity |
+| 5.9 | Test certificate validity, hostname matching and expiration |
+
+**Three Important Communication Relationships:**
+
+**1. Client → Application Gateway**
+
+- Public HTTPS.
+- Public-facing TLS certificate and HTTPS listener.
+
+**2. Application Gateway → APIM**
+
+- Internal HTTPS consideration.
+- We will evaluate the APIM internal gateway's TLS configuration and hostname requirements.
+
+**3. APIM → App Services**
+
+- HTTPS backend.
+- Encrypted communication to the App Service backend hostnames, with certificate validation.
+
+**Important architectural detail:** HTTPS Only on App Service already ensures HTTP requests to the application are redirected to HTTPS. It does not configure the public Application Gateway listener.
+
+We will also distinguish certificates used for server authentication from optional client certificates (mutual TLS). We won't enable client certificate requirements unless we have a specific use case.
+
+**Topics You'll Learn:** TLS handshakes, X.509, certificate authorities, PFX, private keys, Key Vault, certificate binding, hostname validation and certificate lifecycle management.
+
+## Phase 6 — API Management Integration
+
+**Objective:** Register both working APIs in APIM and implement gateway-level controls.
+
+| Activity | Implementation |
+|---|---|
+| 6.1 | Import Patient Records OpenAPI specification |
+| 6.2 | Import Appointments OpenAPI specification |
+| 6.3 | Configure both backend URLs |
+| 6.4 | Configure API routing and operation paths |
+| 6.5 | Configure JWT validation |
+| 6.6 | Implement rate limiting |
+| 6.7 | Configure quotas where appropriate |
+| 6.8 | Configure request/response handling policies |
+| 6.9 | Test APIM-to-App Service private connectivity |
+
+**Rate Limiting**
+
+Rate limiting deserves special attention.
+
+We'll implement an example policy that limits requests per caller or subscription, then test what happens when the limit is exceeded.
+
+For example:
+
+- Normal requests: accepted.
+- Requests exceeding the configured limit: HTTP `429 Too Many Requests`.
+- Appropriate response headers and policy behavior: verified.
+
+We'll also understand the difference between rate limiting and quotas.
+
+**Topics You'll Learn:** APIM products, subscriptions, API operations, backend configuration, policy expressions, JWT validation, rate limiting and API routing.
+
+## Phase 7 — Application Gateway and WAF
+
+**Objective:** Complete the public ingress architecture and demonstrate web application protection.
+
+| Activity | Implementation |
+|---|---|
+| 7.1 | Review existing Application Gateway configuration |
+| 7.2 | Configure HTTPS listener |
+| 7.3 | Configure routing rules |
+| 7.4 | Validate backend health |
+| 7.5 | Associate and review WAF policy |
+| 7.6 | Review managed rule sets |
+| 7.7 | Test common malicious HTTP requests |
+| 7.8 | Review WAF logs |
+| 7.9 | Evaluate Detection versus Prevention mode |
+| 7.10 | Validate legitimate requests still work |
+
+We'll test representative cases such as SQL injection patterns, cross-site scripting payloads and malformed requests.
+
+We'll start with Detection mode, investigate the results, and move to Prevention mode when the configuration is ready.
+
+**Topics You'll Learn:** Application Gateway routing, WAF inspection, OWASP attack patterns, managed rules, false positives, logging and blocking.
+
+## Phase 8 — SAST, SCA and DAST
+
+**Objective:** Use the two APIs as practical targets for application security testing.
+
+This will be an important portfolio component.
+
+| Testing Discipline | Tool | Activities |
+|---|---|---|
+| SAST | Bandit | Scan Python source code for security weaknesses |
+| SCA | pip-audit | Identify vulnerable dependencies |
+| DAST | OWASP ZAP | Test deployed API endpoints |
+| API security testing | OWASP ZAP / manual testing | Test authentication, authorization and input validation |
+| Remediation | Python code changes | Fix findings and rerun tests |
+
+We will deliberately document:
+
+1. What the tool detected.
+2. Why the finding matters.
+3. Whether it is exploitable in our implementation.
+4. How we remediated it.
+5. Whether the subsequent scan passed.
+
+We'll also test negative authorization scenarios, not just whether the API returns successful responses.
+
+**Topics You'll Learn:** SAST, SCA, DAST, vulnerability triage, false positives, remediation and security regression testing.
+
+## Phase 9 — GitHub Actions CI/CD
+
+**Objective:** Automate testing, security checks and deployment.
+
+We'll create workflows for both APIs while keeping everything in the same repository.
+
+| Activity | What We'll Implement |
+|---|---|
+| 9.1 | Configure GitHub Actions |
+| 9.2 | Create automated unit-test workflow |
+| 9.3 | Integrate Bandit |
+| 9.4 | Integrate pip-audit |
+| 9.5 | Configure deployment authentication to Azure |
+| 9.6 | Deploy Patient Records API automatically |
+| 9.7 | Deploy Appointments API automatically |
+| 9.8 | Implement deployment verification |
+| 9.9 | Integrate post-deployment security testing |
+
+**Intended Pipeline:**
+
+1. Git push / Pull request.
+2. Build and unit tests.
+3. SAST + SCA.
+4. Deployment approval / release.
+5. Deploy Patients API.
+6. Deploy Appointments API.
+7. Post-deployment verification and DAST.
+
+We'll use secure Azure deployment credentials, preferably GitHub Actions with Azure federated credentials/OIDC where supported, rather than storing long-lived publishing passwords in the repository.
+
+## Phase 10 — Final Integration and Evidence
+
+**Objective:** Demonstrate the complete architecture working end to end.
+
+| Test | Expected Outcome |
+|---|---|
+| Patient Records API health check | Successful response |
+| Appointments API health check | Successful response |
+| Retrieve patient | Correct synthetic record |
+| Retrieve appointment | Correct synthetic appointment |
+| Invalid input | Appropriate validation response |
+| Invalid token | HTTP 401 |
+| Unauthorized resource access | HTTP 403 |
+| Excessive API requests | HTTP 429 |
+| HTTP access to HTTPS-only backend | Redirect or secure enforcement |
+| Public HTTPS access | Valid certificate and successful connection |
+| Malicious WAF test | Detected or blocked, according to configured mode |
+| SAST/SCA | Findings documented and remediated |
+| DAST | Results documented and reviewed |
+| CI/CD | Successful automated test and deployment |
+
+We'll save screenshots, configuration evidence, scan reports and test results in the existing GitHub `test-results` directory.

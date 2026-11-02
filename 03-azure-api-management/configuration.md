@@ -4,7 +4,7 @@
 
 Azure API Management (APIM) provides the API gateway layer between the Application Gateway WAF and the backend applications.
 
-It manages API exposure, request routing, authentication policies and traffic control for the Patient Records and Appointments APIs.
+It manages API exposure, request routing, authentication policies and traffic control for the Patients and Appointments APIs.
 
 APIM will be responsible for enforcing controls such as:
 - JWT token validation.
@@ -13,7 +13,6 @@ APIM will be responsible for enforcing controls such as:
 - Request and response transformations.
 - API versioning.
 - Backend routing and access control.
-
 
 ---
 
@@ -26,7 +25,7 @@ APIM will be responsible for enforcing controls such as:
 | Pricing Tier | Developer |
 | Connectivity Type | Virtual Network |
 | Virtual Network Type | Internal |
-| Virtual Network | VNet-savannah-security-security-poc |
+| Virtual Network | vnet-savannah-security-security-poc |
 | Subnets | subnet-apimgmt |
 
 ---
@@ -41,10 +40,10 @@ Application Gateway integration.
 
 Backend API registration and routing.
 
-JWT validation policies.
+JWT validation policies; Verifies API keys and other credentials such as JWTs and certificates presented with requests
 
-Rate limiting policies.
+Rate limiting policies; Enforces usage quotas and rate limits
 
 Network Security Group rules.
 
-API logging and Microsoft Sentinel integration.
+API logging and Microsoft Sentinel integration; Emits logs, metrics, and traces for monitoring, reporting, and troubleshooting

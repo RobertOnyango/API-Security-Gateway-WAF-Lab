@@ -4,7 +4,7 @@
 
 The solution uses a single Azure Virtual Network to provide private connectivity between the API gateway, API management layer and backend application services.
 
-**VNet**: Vnet-savannah-security-poc
+**VNet**: vnet-savannah-security-poc
 **Address Space**: 10.0.0.0/16
 **Region**: West US 3
 
