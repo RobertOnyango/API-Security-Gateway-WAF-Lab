@@ -1,3 +1,4 @@
+# Coordinate the applications activities
 from repositories.appointment_repository import get_all_appointments, get_appointment_by_id
 
 

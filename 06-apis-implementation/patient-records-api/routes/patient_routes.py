@@ -17,6 +17,7 @@ def get_patient_by_id_route(patient_id):
         return jsonify({"error": "Patient not found"}), 404
     return jsonify(patient), 200
 
+# Create a patient dataset
 @patients_bp.post("/patients")
 def create_patient_route():
     payload = request.get_json(silent=True)

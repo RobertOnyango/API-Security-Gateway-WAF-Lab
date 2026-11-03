@@ -1,3 +1,4 @@
+# Sample appointments data repo
 _appointments = [
     {"id": 1, "patient_id": 1, "date": "2026-11-10T09:00:00Z", "status": "scheduled"},
     {"id": 2, "patient_id": 2, "date": "2026-11-11T14:30:00Z", "status": "scheduled"},

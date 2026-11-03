@@ -1,4 +1,4 @@
-# Sample patient data
+# Sample patient data repository
 
 # List of dictionaries: Each dictionary is a key:valeu pair of patient dictinaries
 _patients = [
